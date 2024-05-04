@@ -23,11 +23,12 @@ User.init({
         type: DataTypes.CHAR,
         allowNull: false,
     },
-    firstname: {
+    name: {
         type: DataTypes.CHAR
     },
-    lastname: {
-        type: DataTypes.CHAR
+    email_verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 
 },{
@@ -36,6 +37,6 @@ User.init({
     modelName: 'users'
 })
 
-User.sync()
+User.sync({alter:true})
 
 module.exports = User

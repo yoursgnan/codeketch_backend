@@ -14,6 +14,9 @@ app.use(middleware.requestLogger)
 // service which is running on other port
 app.use(cors())
 
+app.use(middleware.tokenExtractor)
+app.use(middleware.userExtractor)
+
 //create account handler
 app.use('/api/create_account',createAccountRouter)
 

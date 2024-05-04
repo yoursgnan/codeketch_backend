@@ -1,5 +1,6 @@
 const { request, response } = require('express')
 const logger = require('./logger')
+const jwt = require('jsonwebtoken')
 
 // logger middleware
 const requestLogger = (request, response, next) => {
@@ -21,23 +22,33 @@ const unknownEndpoint = (request, response) => {
 }
 
 const tokenExtractor = (request, response, next) => {
-	const authorization = request.get('authorization')
-	console.log(authorization)
-	if (authorization && authorization.startsWith('Bearer ')) {
-		const token = authorization.replace('Bearer ', '')
-		console.log(token)
-		request.token = token
+	try{
+		const authorization = request.get('authorization')
+		console.log(authorization)
+		if (authorization && authorization.startsWith('Bearer ')) {
+			const token = authorization.replace('Bearer ', '')
+			console.log(token)
+			request.token = token
+		}
+	}catch(error){
+		logger.error(error)
 	}
+	
 	next()
 }
 
 const userExtractor = async(request, response, next) => {
-	console.log('token',request.token)
-	if (request.token){
-		const decodedUser = await jwt.verify(request.token, process.env.SECRET_KEY)
-		console.log(decodedUser)
-		request.user = decodedUser
+	try{
+		logger.info('token found',request.token)
+		if (request.token){
+			const decodedUser = await jwt.verify(request.token, process.env.SECRET_KEY)
+			console.log(decodedUser)
+			request.user = decodedUser
+		}
+	}catch(error){
+		logger.error(error)
 	}
+	
 	next()
 }
 
