@@ -43,7 +43,8 @@ sequelize.authenticate()
     logger.info('Connected to database successfully')
 })
 .catch(err => {
-    logger.info('Failed to connect the database')
+    console.log(`Connecting to host ${process.env.DATABASE_HOST}`)
+    logger.info(`Failed to connect the database ${process.env.DATABASE}`)
 });
 
 module.exports = sequelize
