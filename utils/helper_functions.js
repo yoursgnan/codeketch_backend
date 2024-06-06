@@ -13,7 +13,8 @@ const isPasswordSame = async(password, passwordHash) => {
 const createToken = (user) => {
     const user_id = {
         id: user.id,
-        username: user.username
+        username: user.username,
+        name: user.name,
     }
     const token = jwt.sign(user_id, process.env.SECRET_KEY)
     return token
