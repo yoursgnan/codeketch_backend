@@ -4,18 +4,18 @@ const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize({
     dialect: 'postgres',
-    host: 'localhost',
-    database: 'codeketch_db',
-    port: 5432,
-    // username: process.env.DATABASE_USER,
-    // password: process.env.DATABASE_PASSWORD,
-    // dialectOptions: {
-    //     ssl: {
-    //         require: true,
-    //         rejectUnauthorized: true,
-    //         ca: fs.readFileSync('./ca.pem').toString(),
-    //     }
-    // },
+    host: process.env.DATABASE_HOST,
+    database: process.env.DATABASE,
+    port: process.env.DATABASE_PORT,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: true,
+            ca: fs.readFileSync('./ca.pem').toString(),
+        }
+    },
     
 })
 
