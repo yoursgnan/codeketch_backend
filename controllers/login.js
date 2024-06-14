@@ -28,10 +28,9 @@ loginRouter.post('/',async(request,response)=>{
         }
 
         logger.info('user record',user_rec)
-
         if(user_rec){
-            if(await isPasswordSame(user_rec.dataValues.password,user.password)){
-                const token = createToken(user_rec)
+            if(await isPasswordSame(user.password,user_rec.dataValues.password)){
+                const token = await createToken(user_rec)
                 response.status(200).json({token:token})
             }
             else{

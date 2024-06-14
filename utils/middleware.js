@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 
 // logger middleware
 const requestLogger = (request, response, next) => {
-    logger.info('request: ',request)
-    logger.info('response: ',response)
+    // logger.info('request: ',request)
+    // logger.info('response: ',response)
     next()
 }
 

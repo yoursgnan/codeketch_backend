@@ -3,6 +3,7 @@ const cors = require('cors')
 
 const loginRouter = require('./controllers/login')
 const createAccountRouter = require('./controllers/create_account')
+const workspaceRouter = require('./controllers/workspace')
 const middleware = require('./utils/middleware')
 
 app = express()
@@ -22,6 +23,9 @@ app.use('/api/create_account',createAccountRouter)
 
 // login route handler
 app.use('/api/login',loginRouter)
+
+// workspace route handler
+app.use('/api/workspace',workspaceRouter)
 
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
