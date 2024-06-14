@@ -2,13 +2,27 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const encryptPassword = async(password) => {
-    const passwordHash = await bcrypt.hash(password, 10) // 10 refers to number of rounds
-    return passwordHash
+    try{
+        const passwordHash = await bcrypt.hash(password, 10) // 10 refers to number of rounds
+        return passwordHash
+    }
+    catch(error){
+        throw error
+    }
 }
 
-const isPasswordSame = async(password, passwordHash) => {
-    return await bcrypt.compare(password, passwordHash)
-}
+const isPasswordSame = async (password, passwordHash) => {
+    console.log('password', password, passwordHash.replace(/\$/g, '\\$'));
+    try {
+        const isMatch = await bcrypt.compare(password, passwordHash.trim());
+        console.log('password compare:', isMatch);
+        return isMatch;
+    } catch (error) {
+        console.error('Error comparing password:', error);
+        // Handle the error appropriately (e.g., return false or throw a specific error)
+        return false; // Example handling
+    }
+};
 
 const createToken = (user) => {
     const user_id = {
