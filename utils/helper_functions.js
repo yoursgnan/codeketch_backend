@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const nodemailer = require('nodemailer');
 
 const encryptPassword = async(password) => {
     try{
@@ -42,11 +43,44 @@ const getUserFromToken = (token) => {
     const user = jwt.verify(token, process.env.SECRET_KEY)
     return user
 }
+const sendEmail = (mail) =>{
+    
+
+// Create a transporter
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'codeketchofficial@gmail.com', // your Gmail account
+        pass: 'hixu cssr zplm qvyc', // your Gmail app password
+    },
+});
+
+// Setup email data
+let mailOptions = {
+    from: 'codeketchofficial@gmail.com', // sender address
+    to: mail, // list of receivers
+    subject: 'Hello', // Subject line
+    text: 'Hello world?', // plain text body
+    html: '<b>Hello world?</b>', // html body
+};
+
+// Send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+});
+
+}
 
 module.exports = {
     encryptPassword,
     isPasswordSame,
     createToken,
     getUserFromToken,
-    createUserName
+    createUserName,
+    sendEmail
+
 }
